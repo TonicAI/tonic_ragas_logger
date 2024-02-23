@@ -1,0 +1,16 @@
+**/__pycache__/**
+**/.ipynb_checkpoints/**
+**/.vs/**
+**/.DS_Store
+dist/
+docs/
+
+# junk files
+**/scratch_files/**
+
+# mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+.env
