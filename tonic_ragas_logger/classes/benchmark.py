@@ -2,7 +2,7 @@ from typing import Iterator, List, Optional
 from dataclasses import dataclass
 from uuid import UUID
 
-from tonic_validate.utils.telemetry import Telemetry
+from tonic_ragas_logger.utils.telemetry import Telemetry
 
 
 @dataclass

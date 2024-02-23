@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 from typing import List, TypedDict
 
-from tonic_validate.classes.benchmark import BenchmarkItem
+from tonic_ragas_logger.classes.benchmark import BenchmarkItem
 
 
 @dataclass

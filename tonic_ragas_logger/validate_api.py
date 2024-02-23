@@ -1,10 +1,10 @@
 from typing import List, Optional, Dict
-from tonic_validate.classes.benchmark import Benchmark
-from tonic_validate.classes.run import Run
-from tonic_validate.config import TONIC_VALIDATE_API_KEY, TONIC_VALIDATE_BASE_URL
+from tonic_ragas_logger.classes.benchmark import Benchmark
+from tonic_ragas_logger.classes.run import Run
+from tonic_ragas_logger.config import TONIC_VALIDATE_API_KEY, TONIC_VALIDATE_BASE_URL
 
-from tonic_validate.utils.http_client import HttpClient
-from tonic_validate.utils.telemetry import Telemetry
+from tonic_ragas_logger.utils.http_client import HttpClient
+from tonic_ragas_logger.utils.telemetry import Telemetry
 
 
 class ValidateApi:
