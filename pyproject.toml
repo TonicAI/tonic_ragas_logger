@@ -1,16 +1,19 @@
 [tool.poetry]
-name = "tonic-validate"
+name = "tonic-ragas-logger"
 version = "3.2.0"
-description = "RAG evaluation metrics."
+description = "Uploads results from ragas to Tonic Validate."
 authors = []
 readme = "README.md"
 
 [tool.poetry.dependencies]
 python = ">=3.8.1,<4.0.0"
 python-dotenv = "^1.0.1"
+ragas = "^0.1.2"
+tonic-validate = "^3.2.0"
 
 [tool.poetry.group.dev.dependencies]
 ruff = "^0.1.15"
+ipykernel = "^6.29.2"
 
 
 [build-system]

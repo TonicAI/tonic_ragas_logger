@@ -1,21 +1,3 @@
-from .validate_api import ValidateApi
-from .classes import (
-    Benchmark,
-    BenchmarkItem,
-    LLMResponse,
-    CallbackLLMResponse,
-    Run,
-    RunData,
-    UserInfo,
-)
+from .ragas_validate_api import RagasValidateApi
 
-__all__ = [
-    "ValidateApi",
-    "Benchmark",
-    "BenchmarkItem",
-    "LLMResponse",
-    "CallbackLLMResponse",
-    "Run",
-    "RunData",
-    "UserInfo",
-]
+__all__ = ["RagasValidateApi"]
