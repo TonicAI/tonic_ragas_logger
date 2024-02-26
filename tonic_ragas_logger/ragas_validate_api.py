@@ -1,7 +1,7 @@
 from typing import Optional, Dict
 
 from tonic_validate import Run, RunData
-from tonic_ragas_logger.config import TONIC_VALIDATE_API_KEY, TONIC_VALIDATE_BASE_URL
+from tonic_ragas_logger.config import Config
 
 from tonic_ragas_logger.utils.http_client import HttpClient
 from ragas.evaluation import Result
@@ -21,15 +21,16 @@ class RagasValidateApi:
         self,
         api_key: Optional[str] = None,
     ):
+        self.config = Config()
         if api_key is None:
-            api_key = TONIC_VALIDATE_API_KEY
+            api_key = self.config.TONIC_VALIDATE_API_KEY
             if api_key is None:
                 exception_message = (
                     "No api key provided. Please provide an api key or set "
                     "TONIC_VALIDATE_API_KEY environment variable."
                 )
                 raise Exception(exception_message)
-        self.client = HttpClient(TONIC_VALIDATE_BASE_URL, api_key)
+        self.client = HttpClient(self.config.TONIC_VALIDATE_BASE_URL, api_key)
 
     def upload_results(
         self, project_id: str, results: Result, run_metadata: Dict[str, str] = {}
