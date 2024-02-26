@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "tonic-ragas-logger"
-version = "1.0.0"
+version = "1.0.1"
 description = "Uploads results from ragas to Tonic Validate."
 authors = []
 readme = "README.md"
