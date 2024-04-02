@@ -1,4 +1,4 @@
-from typing import Optional, Dict
+from typing import Any, List, Optional, Dict
 
 from tonic_validate import Run, RunData
 from tonic_ragas_logger.config import Config
@@ -33,7 +33,11 @@ class RagasValidateApi:
         self.client = HttpClient(self.config.TONIC_VALIDATE_BASE_URL, api_key)
 
     def upload_results(
-        self, project_id: str, results: Result, run_metadata: Dict[str, str] = {}
+        self,
+        project_id: str,
+        results: Result,
+        run_metadata: Dict[str, Any] = {},
+        tags: List[str] = [],
     ) -> str:
         """Uploads results to a Tonic Validate project.
 
@@ -47,21 +51,15 @@ class RagasValidateApi:
             Metadata to attach to the run. If the values are not strings, then they are
             converted to strings before making the request.
         """
-        # ensure run_metadata is Dict[str, str]
-        processed_run_metadata = {
-            str(key): str(value) for key, value in run_metadata.items()
-        }
-        run_response = self.client.http_post(f"/projects/{project_id}/runs")
-        run_response = self.client.http_put(
-            f"/projects/{project_id}/runs/{run_response['id']}",
-            data={"run_metadata": processed_run_metadata},
-        )
         run = self.__convert_to_run(results)
-        for run_data in run.run_data:
-            _ = self.client.http_post(
-                f"/projects/{project_id}/runs/{run_response['id']}/logs",
-                data=run_data.to_dict(),
-            )
+        run_response = self.client.http_post(
+            f"/projects/{project_id}/runs/with_data",
+            data={
+                "run_metadata": run_metadata,
+                "tags": tags,
+                "data": [run_data.to_dict() for run_data in run.run_data],
+            },
+        )
         return run_response["id"]
 
     def __convert_to_run(self, results: Result) -> Run:
@@ -74,7 +72,8 @@ class RagasValidateApi:
         """
         try:
             overall_scores = {
-                str(score): float(value) for score, value in results.items()
+                str(score): 0 if value is None else float(value)
+                for score, value in results.items()
             }
         except ValueError:
             raise ValueError(
@@ -95,7 +94,7 @@ class RagasValidateApi:
         for i in range(len(results.scores)):
             try:
                 scores: Dict[str, float | None] = {
-                    str(score): float(value)
+                    str(score): 0 if value is None else float(value)
                     for score, value in results.scores[i].items()
                 }
             except ValueError:
@@ -112,4 +111,9 @@ class RagasValidateApi:
                 )
             )
 
-        return Run(overall_scores=overall_scores, run_data=run_data, id=None)
+        return Run(
+            overall_scores=overall_scores,
+            run_data=run_data,
+            llm_evaluator=None,
+            id=None,
+        )
