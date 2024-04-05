@@ -124,6 +124,5 @@ class RagasValidateApi:
         return Run(
             overall_scores=overall_scores,
             run_data=run_data,
-            llm_evaluator=None,
             id=None,
         )
