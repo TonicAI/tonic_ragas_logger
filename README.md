@@ -69,3 +69,23 @@ After you execute `upload_results`, your results should be visible in the UI.
 </picture>
 
 Congratulations, now you have uploaded your Ragas results to Tonic Validate!
+
+
+
+
+### Telemetry
+Tonic Ragas Logger collects minimal telemetry to help us figure out what users want and how they're using the product. We do not use any existing telemetry framework and instead created our own privacy focused setup. Only the following information is tracked
+
+* What metrics were used for a run
+* Number of questions in a run
+* SDK Version
+* Is being run on a CI machine
+
+We do **NOT** track things such as the contents of the questions / answers, your scores, or any other sensitive information. For detecting CI/CD, we only check for common environment variables in different CI/CD environments. We do not log the values of these environment variables.
+
+We also generate a random UUID to help us figure out how many users are using the product. This UUID is linked to your Tonic Validate account only to help track who is using the SDK and UI at once and to get user counts. If you want to see how we implemented telemetry, you can do so in the `tonic_ragas_logger/utils/telemetry.py` file
+
+If you wish to opt out of telemetry, you only need to set the `TONIC_RAGAS_DO_NOT_TRACK` environment variable to `True`.
+
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
