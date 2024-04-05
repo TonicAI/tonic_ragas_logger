@@ -1,5 +1,6 @@
 from typing import Any, List, Optional, Dict
 
+from tonic_ragas_logger.utils.telemetry import Telemetry
 from tonic_validate import Run, RunData
 from tonic_ragas_logger.config import Config
 
@@ -31,6 +32,7 @@ class RagasValidateApi:
                 )
                 raise Exception(exception_message)
         self.client = HttpClient(self.config.TONIC_VALIDATE_BASE_URL, api_key)
+        self.telemetry = Telemetry()
 
     def upload_results(
         self,
@@ -60,6 +62,14 @@ class RagasValidateApi:
                 "data": [run_data.to_dict() for run_data in run.run_data],
             },
         )
+
+        try:
+            self.telemetry.log_run(
+                len(run.run_data), list(run.overall_scores.keys())
+            )
+        except Exception as _:
+            pass
+
         return run_response["id"]
 
     def __convert_to_run(self, results: Result) -> Run:
