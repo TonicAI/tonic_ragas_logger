@@ -9,7 +9,7 @@ readme = "README.md"
 python = ">=3.8.1,<4.0.0"
 python-dotenv = "^1.0.1"
 ragas = "^0.1.2"
-tonic-validate = ">=4.0.0"
+tonic-validate = ">=6.2.0"
 
 [tool.poetry.group.dev.dependencies]
 ruff = "^0.1.15"
